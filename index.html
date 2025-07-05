@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SC VATAL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #407AFF;
+            --dark-blue: #000436;
+            --light-bg: #F0E7D8;
+            --white: #FFFFFF;
+            --text-dark: #333333;
+            --text-light: rgba(255, 255, 255, 0.9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--light-bg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 4, 54, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 12px 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(0, 4, 54, 0.98);
+            box-shadow: 0 2px 20px rgba(0, 4, 54, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .nav-logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #64B5F6 100%);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-logo {
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 40px;
+            flex: 1;
+        }
+
+        .nav-link {
+            font-family: 'Poppins', sans-serif;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 8px 0;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Header */
+        .header {
+            background: var(--dark-blue);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            padding: 100px 0;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .header-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 60px;
+        }
+
+        .header-text {
+            text-align: left;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header-text .logo {
+            font-size: 3.5rem;
+            color: var(--white);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            margin: 20px 0 30px;
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 16px 40px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button:hover {
+            background-color: #2f66d4;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .header-image {
+            position: relative;
+            z-index: 2;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .header-image img {
+            width: 100%;
+            border-radius: 20px;
+            object-fit: cover;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* What We Do Section */
+        .what-we-do {
+            padding: 100px 0;
+            background: var(--primary-color);
+        }
+
+        .what-we-do .section-title {
+            color: white;
+        }
+
+        .what-we-do-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .what-we-do-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: var(--text-light);
+            margin-bottom: 40px;
+        }
+
+        .what-we-do-features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .feature-description {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        /* Principles Section */
+        .principles {
+            padding: 100px 0;
+            background: var(--dark-blue);
+        }
+
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 60px;
+            color: white;
+        }
+
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .principle-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 5px solid var(--primary-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .principle-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(64, 122, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .principle-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(64, 122, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .principle-card:hover::before {
+            opacity: 1;
+        }
+
+        .principle-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .principle-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--text-light);
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Team Section */
+        .team {
+            padding: 100px 0;
+            background: var(--primary-color);
+        }
+
+        .team .section-title {
+            color: white;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .team-member {
+            background: white;
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+        }
+
+        .member-photo-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+        }
+
+        .member-photo {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--primary-color);
+        }
+
+        .social-links {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .team-member:hover .social-links {
+            opacity: 1;
+        }
+
+        .social-links a {
+            width: 30px;
+            height: 30px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--dark-blue);
+            transform: translateY(-3px);
+        }
+
+        .member-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--dark-blue);
+        }
+
+        .member-role {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .member-bio {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .member-email {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .member-email:hover {
+            color: var(--dark-blue);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 0;
+            background: var(--light-bg);
+        }
+
+        .contact .section-title {
+            color: var(--dark-blue);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-top: 40px;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .contact-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), #64B5F6);
+            border-radius: 20px 20px 0 0;
+        }
+
+        .form-subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--dark-blue);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e8e8e8;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fafafa;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(64, 122, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #64B5F6 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(64, 122, 255, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .contact-info {
+            background: var(--dark-blue);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            align-self: center;
+        }
+
+        .contact-info h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .contact-info p {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-info i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-blue);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .header-grid {
+                grid-template-columns: 1fr;
+                padding-top: 80px;
+                padding-bottom: 80px;
+            }
+
+            .header-text {
+                text-align: center;
+            }
+
+            .what-we-do-features {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                gap: 30px;
+            }
+            
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(0, 4, 54, 0.98);
+                flex-direction: column;
+                padding: 20px;
+                gap: 20px;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .header .logo {
+                font-size: 2.5rem;
+            }
+
+            .tagline {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .what-we-do, .principles, .team, .contact {
+                padding: 60px 0;
+            }
+
+            .what-we-do-text {
+                font-size: 1.1rem;
+            }
+
+            .feature-card {
+                padding: 25px;
+            }
+
+            .principle-card {
+                padding: 25px;
+            }
+
+            .principle-number {
+                font-size: 1.5rem;
+            }
+
+            .principle-text {
+                font-size: 1rem;
+            }
+
+            .team-member {
+                padding: 30px 25px;
+            }
+
+            .contact-form {
+                padding: 40px;
+            }
+
+            .container {
+                padding: 0 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header .logo {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1.1rem;
+            }
+
+            .cta-button {
+                padding: 14px 30px;
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .principle-card {
+                padding: 20px;
+            }
+
+            .team-member {
+                padding: 25px 20px;
+            }
+
+            .contact-form {
+                padding: 30px 20px;
+            }
+            
+            .submit-btn {
+                padding: 15px 30px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .principle-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .principle-card:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .principle-card:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .principle-card:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+
+        .team-member {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .team-member:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .team-member:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo-container">
+                <div class="nav-logo-icon">SC</div>
+                <a href="#inicio" class="nav-logo">VATAL</a>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#inicio" class="nav-link">Inicio</a></li>
+                <li><a href="#que-hacemos" class="nav-link">Qué Hacemos</a></li>
+                <li><a href="#principios" class="nav-link">Principios</a></li>
+                <li><a href="#equipo" class="nav-link">Equipo</a></li>
+                <li><a href="#contacto" class="nav-link">Contacto</a></li>
+            </ul>
+            <div class="mobile-menu-toggle" id="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="header" id="inicio">
+        <div class="container">
+            <div class="header-grid">
+                <div class="header-text">
+                    <h1 class="logo">SC VATAL</h1>
+                    <p class="tagline">Generando valor invirtiendo en proyectos<br>rentables y con propósito</p>
+                    <a href="#contacto" class="cta-button">CONTACTANOS</a>
+                </div>
+                <div class="header-image">
+                    <img src="hero-image.jpg" alt="Inversiones inteligentes">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What We Do Section -->
+    <section class="what-we-do" id="que-hacemos">
+        <div class="container">
+            <h2 class="section-title">Qué Hacemos</h2>
+            <div class="what-we-do-content">
+                <p class="what-we-do-text">
+                    Somos una firma de inversión especializada en la construcción y gestión de portafolios diversificados. 
+                    Nuestro enfoque se centra en activos de mercados de capitales, aplicando estrategias de inversión 
+                    disciplinadas y orientadas al largo plazo.
+                </p>
+                <div class="what-we-do-features">
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3 class="feature-title">Análisis de Mercado</h3>
+                        <p class="feature-description">Evaluación exhaustiva de oportunidades de inversión en mercados de capitales</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💼</div>
+                        <h3 class="feature-title">Gestión de Portafolios</h3>
+                        <p class="feature-description">Construcción de portafolios diversificados adaptados a diferentes perfiles de riesgo</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📈</div>
+                        <h3 class="feature-title">Estrategias de Inversión</h3>
+                        <p class="feature-description">Implementación de estrategias de inversión basadas en análisis fundamentales</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Principles Section -->
+    <section class="principles" id="principios">
+        <div class="container">
+            <h2 class="section-title">Principios de Inversión</h2>
+            <div class="principles-grid">
+                <div class="principle-card">
+                    <div class="principle-number">01</div>
+                    <p class="principle-text">No invertimos en lo que no entendemos o no nos es familiar</p>
+                </div>
+                <div class="principle-card">
+                    <div class="principle-number">02</div>
+                    <p class="principle-text">Esperamos con paciencia antes de poner fondos en posibilidades subvaloradas</p>
+                </div>
+                <div class="principle-card">
+                    <div class="principle-number">03</div>
+                    <p class="principle-text">Nunca destinamos más del 20% del capital en activos de riesgo</p>
+                </div>
+                <div class="principle-card">
+                    <div class="principle-number">04</div>
+                    <p class="principle-text">Siempre tenemos en cuenta la inflación</p>
+                </div>
+                <div class="principle-card">
+                    <div class="principle-number">05</div>
+                    <p class="principle-text">Diversificamos el riesgo</p>
+                </div>
+                <div class="principle-card">
+                    <div class="principle-number">06</div>
+                    <p class="principle-text">Aprovechamos el milagro del interés compuesto</p>
+                </div>
+                <div class="principle-card">
+                    <div class="principle-number">07</div>
+                    <p class="principle-text">Buscamos beneficios apropiados en lugar de espectaculares</p>
+                </div>
+                <div class="principle-card">
+                    <div class="principle-number">08</div>
+                    <p class="principle-text">Nuestras inversiones se enfocan en plazos medios y largos</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team" id="equipo">
+        <div class="container">
+            <h2 class="section-title">Nuestro Equipo</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-photo-container">
+                        <img src="leonardo.jpg" alt="Leonardo Tamayo" class="member-photo">
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    <h3 class="member-name">Leonardo Tamayo</h3>
+                    <p class="member-role">CEO & Fundador</p>
+                    <p class="member-bio">Más de 15 años de experiencia en mercados de capitales y gestión de inversiones.</p>
+                    <a href="mailto:leonardo@scvatal.com" class="member-email">leonardo@scvatal.com</a>
+                </div>
+                <div class="team-member">
+                    <div class="member-photo-container">
+                        <img src="sebastian.jpg" alt="Sebastián Salazar" class="member-photo">
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    <h3 class="member-name">Sebastián Salazar</h3>
+                    <p class="member-role">CFO</p>
+                    <p class="member-bio">Experto en finanzas corporativas y estructuración de inversiones.</p>
+                    <a href="mailto:sebastian@scvatal.com" class="member-email">sebastian@scvatal.com</a>
+                </div>
+                <div class="team-member">
+                    <div class="member-photo-container">
+                        <img src="paula.jpg" alt="Paula Orjuela" class="member-photo">
+                        <div class="social-links">
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    <h3 class="member-name">Paula Orjuela</h3>
+                    <p class="member-role">CIO</p>
+                    <p class="member-bio">Especialista en análisis de mercados y estrategias de inversión.</p>
+                    <a href="mailto:paula@scvatal.com" class="member-email">paula@scvatal.com</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contacto">
+        <div class="container">
+            <h2 class="section-title">Contáctanos</h2>
+            <div class="contact-container">
+                <form class="contact-form" id="contactForm" action="https://formsubmit.co/leonardo@scvatal.com" method="POST">
+                    <!-- Agregar campos ocultos para personalizar el correo -->
+                    <input type="hidden" name="_subject" value="Nuevo mensaje de contacto desde SC VATAL">
+                    <input type="hidden" name="_next" value="https://tudominio.com/gracias.html">
+                    <input type="hidden" name="_captcha" value="false">
+                    
+                    <p class="form-subtitle">Complete el formulario y nos pondremos en contacto con usted lo antes posible</p>
+                    <div class="form-group">
+                        <label for="name">Nombre</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subject">Asunto</label>
+                        <select id="subject" name="subject" required>
+                            <option value="" disabled selected>Seleccione un asunto</option>
+                            <option value="inversion">Oportunidades de inversión</option>
+                            <option value="consulta">Consulta general</option>
+                            <option value="soporte">Soporte</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Mensaje</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Enviar Mensaje</button>
+                </form>
+                <div class="contact-info">
+                    <h3>Información de contacto</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Bogotá, Colombia</p>
+                    <p><i class="fas fa-phone"></i> +57 123 456 7890</p>
+                    <p><i class="fas fa-envelope"></i> info@scvatal.com</p>
+                    <p><i class="fas fa-clock"></i> Lunes a Viernes: 9:00 - 18:00</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p style="margin-bottom: 10px;">
+                <a href="politicas.html" style="color: white; text-decoration: underline;">Políticas AML/CFT</a>
+            </p>
+            <p class="footer-content">© 2025 SC VATAL. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Close mobile menu if open
+                    navMenu.classList.remove('active');
+                    mobileMenuToggle.classList.remove('active');
+                }
+            });
+        });
+
+        // Form submission feedback
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            // El envío real lo maneja FormSubmit
+            // Mostramos feedback al usuario
+            alert('Gracias por tu mensaje. Nos pondremos en contacto contigo pronto.');
+        });
+    </script>
+</body>
+</html>
